@@ -1,2 +1,3 @@
 # Streamlit
-Project about movies 
+Exercise to use Streamlit to display information from csv
+
