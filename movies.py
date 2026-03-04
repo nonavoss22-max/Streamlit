@@ -3,7 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the dataset
-df = pd.read_csv("movies_cleaned.csv")
+df = pd.read_csv("movies.csv")
+df['Year'] = df['title'].str.extract(r'\((\d{4})\)')
+df['Title'] = df['title'].str.replace(r'\s*\(\d{4}\)', '', regex=True).str.strip()
+df = df.drop(columns=['title'])
 
 # Alle einzigartigen Genres extrahieren
 all_genres = sorted(set(
