@@ -4,11 +4,12 @@ import matplotlib.pyplot as plt
 
 # Load the dataset
 df = pd.read_csv("movies.csv")
-st.write(df.shape)        
-st.write(df.head())       
 df['Year'] = df['title'].str.extract(r'\((\d{4})\)')
 df['Title'] = df['title'].str.replace(r'\s*\(\d{4}\)', '', regex=True).str.strip()
 df = df.drop(columns=['title'])
+
+# (no genres listed) rausfiltern
+df = df[df['genres'] != '(no genres listed)']
 
 # Alle einzigartigen Genres extrahieren
 all_genres = sorted(set(
@@ -23,7 +24,7 @@ st.title("🎬 Movie Explorer App")
 # Genre selection
 selected_genre = st.selectbox("Select a genre:", all_genres)
 
-# Filter movies by selected genre (nur exakter Match)
+# Filter movies by selected genre
 filtered_movies = df[df['genres'].str.split('|').apply(lambda x: selected_genre in x)]
 
 # Display filtered movies
